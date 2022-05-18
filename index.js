@@ -19,9 +19,16 @@ async function run() {
   try {
     await client.connect();
     const todoCollection = client.db("todoList").collection("todos");
+    //to add todos
+    app.post("/addtodo", async (req, res) => {
+      const todo = req.body;
+      const result = await todoCollection.insertOne(todo);
+      res.send(result);
+    });
   } finally {
   }
 }
+run();
 
 app.get("/", (req, res) => {
   res.send("Todo App Server is running");
